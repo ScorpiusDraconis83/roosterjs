@@ -8,9 +8,7 @@ const {
     nodeModulesPath,
     distPath,
     packagesPath,
-    packagesUiPath,
-    packagesContentModelPath,
-    allPackages,
+    packages,
 } = require('./common');
 
 function buildCommonJs() {
@@ -23,16 +21,21 @@ function buildCommonJs() {
                 'tsconfig.json'
             )} -t es5 --moduleResolution node -m commonjs`
     );
-    runNode(typescriptPath, packagesUiPath);
-    runNode(typescriptPath, packagesContentModelPath);
 
-    allPackages.forEach(packageName => {
+    packages.forEach(packageName => {
         const copy = fileName => {
             const source = path.join(rootPath, fileName);
             const target = path.join(distPath, packageName, fileName);
             fs.copyFileSync(source, target);
         };
-        copy('README.md');
+
+        const sourceReadme = path.join(packagesPath, packageName, 'README.md');
+        if (fs.existsSync(sourceReadme)) {
+            fs.copyFileSync(sourceReadme, path.join(distPath, packageName, 'README.md'));
+        } else {
+            copy('README.md');
+        }
+
         copy('LICENSE');
     });
 }
