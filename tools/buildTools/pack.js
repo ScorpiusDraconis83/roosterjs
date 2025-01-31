@@ -3,27 +3,27 @@
 const {
     packagesPath,
     nodeModulesPath,
-    packagesUiPath,
     rootPath,
     runWebPack,
     buildConfig,
-    packagesContentModelPath,
+    roosterJsDistPath,
 } = require('./common');
+const path = require('path');
 
 async function pack(isProduction, isAmd, target, filename) {
-    const { packEntry, targetPath, libraryName, externalHandler } = buildConfig[target];
+    const { entry, libraryName, externalHandler } = buildConfig[target];
     const webpackConfig = {
-        entry: packEntry,
+        entry: path.join(packagesPath, entry, 'lib/index.ts'),
         devtool: 'source-map',
         output: {
             filename,
-            path: targetPath,
+            path: roosterJsDistPath,
             libraryTarget: isAmd ? 'amd' : undefined,
             library: isAmd ? undefined : libraryName,
         },
         resolve: {
             extensions: ['.ts', '.tsx', '.js'],
-            modules: [packagesPath, packagesUiPath, packagesContentModelPath, nodeModulesPath],
+            modules: [packagesPath, nodeModulesPath],
         },
         module: {
             rules: [
@@ -60,37 +60,25 @@ function createStep(isProduction, isAmd, target) {
     return {
         message: `Packing ${fileName}...`,
         callback: async () => pack(isProduction, isAmd, target, fileName),
-        enabled: options => (isProduction ? options.packprod : options.pack),
+        enabled: options =>
+            (options.builddemo && isProduction && !isAmd) ||
+            (isProduction ? options.packprod : options.pack),
     };
 }
 
 module.exports = {
-    commonJsDebug: createStep(false /*isProduction*/, false /*isAmd*/, 'packages'),
-    commonJsProduction: createStep(true /*isProduction*/, false /*isAmd*/, 'packages'),
-    amdDebug: createStep(false /*isProduction*/, true /*isAmd*/, 'packages'),
-    amdProduction: createStep(true /*isProduction*/, true /*isAmd*/, 'packages'),
-    commonJsDebugUi: createStep(false /*isProduction*/, false /*isAmd*/, 'packages-ui'),
-    commonJsProductionUi: createStep(true /*isProduction*/, false /*isAmd*/, 'packages-ui'),
-    amdDebugUi: createStep(false /*isProduction*/, true /*isAmd*/, 'packages-ui'),
-    amdProductionUi: createStep(true /*isProduction*/, true /*isAmd*/, 'packages-ui'),
-    commonJsDebugContentModel: createStep(
-        false /*isProduction*/,
-        false /*isAmd*/,
-        'packages-content-model'
-    ),
-    commonJsProductionContentModel: createStep(
-        true /*isProduction*/,
-        false /*isAmd*/,
-        'packages-content-model'
-    ),
-    amdDebugContentModel: createStep(
-        false /*isProduction*/,
-        true /*isAmd*/,
-        'packages-content-model'
-    ),
-    amdProductionContentModel: createStep(
-        true /*isProduction*/,
-        true /*isAmd*/,
-        'packages-content-model'
-    ),
+    commonJsDebugUi: createStep(false /*isProduction*/, false /*isAmd*/, 'react'),
+    commonJsProdUi: createStep(true /*isProduction*/, false /*isAmd*/, 'react'),
+    amdDebugUi: createStep(false /*isProduction*/, true /*isAmd*/, 'react'),
+    amdProductionUi: createStep(true /*isProduction*/, true /*isAmd*/, 'react'),
+
+    commonJsDebugMain: createStep(false /*isProduction*/, false /*isAmd*/, 'main'),
+    commonJsProdMain: createStep(true /*isProduction*/, false /*isAmd*/, 'main'),
+    amdDebugMain: createStep(false /*isProduction*/, true /*isAmd*/, 'main'),
+    amdProdMain: createStep(true /*isProduction*/, true /*isAmd*/, 'main'),
+
+    commonJsDebugAdapter: createStep(false /*isProduction*/, false /*isAmd*/, 'legacyAdapter'),
+    commonJsProdAdapter: createStep(true /*isProduction*/, false /*isAmd*/, 'legacyAdapter'),
+    amdDebugAdapter: createStep(false /*isProduction*/, true /*isAmd*/, 'legacyAdapter'),
+    amdProdAdapter: createStep(true /*isProduction*/, true /*isAmd*/, 'legacyAdapter'),
 };

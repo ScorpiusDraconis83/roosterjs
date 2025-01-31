@@ -7,12 +7,12 @@ const mkdirp = require('mkdirp');
 const {
     rootPath,
     distPath,
-    roosterJsDistPath,
     nodeModulesPath,
     runNode,
     err,
     buildConfig,
     versions,
+    roosterJsDistPath,
 } = require('./common');
 
 const namePlaceholder = '__NAME__';
@@ -26,11 +26,11 @@ const regClassInterface = /(\/\*(\*(?!\/)|[^*])*\*\/\s*)?(export\s+)?(default\s+
 // 2. [export ][default |declare ]function <NAME>(...)[: <TYPE>];
 const regFunction = /(\/\*(\*(?!\/)|[^*])*\*\/\s*)?(export\s+)?(default\s+|declare\s+)?function\s+([a-zA-Z0-9_]+(\s*<(?:[^>]|=>)+>)?)\s*(\([^;]+;)/g;
 // 3. [export ][default |declare ]const enum <NAME> {...}
-const regEnum = /(\/\*(\*(?!\/)|[^*])*\*\/\s*)?(export\s+)?(default\s+|declare\s+)?(const\s+)?enum\s+([a-zA-Z0-9_<>]+)\s*{/g;
+const regEnum = /(\/\*(\*(?!\/)|[^*])*\*\/\s*)?(?:\/\/.*\n)?(export\s+)?(default\s+|declare\s+)?(const\s+)?enum\s+([a-zA-Z0-9_<>]+)\s*{/g;
 // 4. [export ][default |declare ]type <NAME> = ...;
 const regType = /(\/\*(\*(?!\/)|[^*])*\*\/\s*)?(export\s+)?(default\s+|declare\s+)?type\s+([0-9a-zA-Z_]+(\s*<[^>]+>)?)\s*=\s*/g;
 // 5. [export ][default |declare ]const <NAME>: ...;
-const regConst = /(\/\*(\*(?!\/)|[^*])*\*\/\s*)?(export\s+)?(default\s+|declare\s+)?const\s+([0-9a-zA-Z_<>]+)\s*:\s*/g;
+const regConst = /(\/\*(\*(?!\/)|[^*])*\*\/\s*)?(export\s+)?(default\s+|declare\s+)?const\s+([0-9a-zA-Z_<>]+)(\s*:)?\s*/g;
 // 6. export[ default] <NAME>|{NAMES};
 const regExport = /(\/\*(\*(?!\/)|[^*])*\*\/\s*)?(export\s+)(default\s+([0-9a-zA-Z_]+)\s*,?)?(\s*{([^}]+)})?\s*;/g;
 
@@ -336,19 +336,20 @@ function generateDts(library, isAmd, queue, version) {
         if (exports) {
             for (var name in exports) {
                 var alias = exports[name];
-                var texts = null;
+                var texts = [];
+
                 if (elements[name]) {
-                    texts = publicElement(elements[name]);
-                } else {
-                    for (var n in elements) {
-                        if (n.indexOf(alias + '<') == 0) {
-                            texts = publicElement(elements[n]);
-                            break;
-                        }
+                    texts = texts.concat(publicElement(elements[name]));
+                }
+
+                for (var n in elements) {
+                    if (n.indexOf(alias + '<') == 0) {
+                        texts = texts.concat(publicElement(elements[n]));
                     }
-                    if (!texts) {
-                        err(`Name not found: ${name}; alias: ${alias}; file: ${filename}`);
-                    }
+                }
+
+                if (texts.length == 0) {
+                    err(`Name not found: ${name}; alias: ${alias}; file: ${filename}`);
                 }
 
                 for (var text of texts) {
@@ -376,7 +377,7 @@ function generateDts(library, isAmd, queue, version) {
         var { filename, elements } = queue[i];
 
         for (var name in elements) {
-            elements[name].forEach(({ published, text, comment }) => {
+            Object.values(elements[name]).forEach(({ published, text, comment }) => {
                 var code = text.replace(namePlaceholder, name);
                 if (!comment) {
                     err(`Exported element must have comment. File: ${filename} Code: ${code}`);
@@ -398,18 +399,32 @@ function generateDts(library, isAmd, queue, version) {
     return content;
 }
 
-function createQueue(rootPath, baseDir, root, additionalFiles, externalHandler) {
+function createQueue(rootPath, baseDir, packages, externalHandler) {
     var queue = [];
     var i = 0;
 
+    let tsFiles = [];
+
     // First part, process exported members
-    enqueue(queue, path.join(baseDir, root));
+    packages.forEach(packageName => {
+        const indexName = path.join(baseDir, packageName, 'lib/index.d.ts');
+
+        enqueue(queue, indexName);
+
+        const filesFromPackage = glob
+            .sync(path.relative(rootPath, path.join(baseDir, packageName, 'lib', '**', '*.d.ts')))
+            .map(x => path.relative(baseDir, x));
+
+        tsFiles = tsFiles.concat(filesFromPackage);
+    });
+
     for (; i < queue.length; i++) {
         process(baseDir, queue, i, rootPath, externalHandler);
     }
 
     // Second part, process "local exported" members (exported from a file, but not exported from index)
-    (additionalFiles || []).forEach(f => enqueue(queue, path.join(baseDir, f)));
+    tsFiles.forEach(f => enqueue(queue, path.join(baseDir, f)));
+
     for (; i < queue.length; i++) {
         process(baseDir, queue, i, rootPath, externalHandler);
     }
@@ -419,45 +434,32 @@ function createQueue(rootPath, baseDir, root, additionalFiles, externalHandler) 
 
 function dts(isAmd, target) {
     const {
-        targetPath,
-        targetPackages,
-        startFileName,
+        packages,
         libraryName,
-        targetFileName,
+        jsFileBaseName,
         externalHandler,
-        dependsOnRoosterJs,
+        dependsOnLegacy,
         dependsOnReact,
+        dependsOnMain,
     } = buildConfig[target];
 
-    mkdirp.sync(targetPath);
+    mkdirp.sync(roosterJsDistPath);
 
-    let tsFiles = [];
-
-    targetPackages.forEach(packageName => {
-        tsFiles = tsFiles.concat(
-            glob
-                .sync(
-                    path.relative(rootPath, path.join(distPath, packageName, 'lib', '**', '*.d.ts'))
-                )
-                .map(x => path.relative(distPath, x))
-        );
-    });
-
-    const dtsQueue = createQueue(rootPath, distPath, startFileName, tsFiles, externalHandler);
+    const dtsQueue = createQueue(rootPath, distPath, packages, externalHandler);
     const dtsContent = generateDts(libraryName, isAmd, dtsQueue, versions[target]);
-    const fileName = `${targetFileName}${isAmd ? '-amd' : ''}.d.ts`;
-    const fullFileName = path.join(targetPath, fileName);
+    const fileName = `${jsFileBaseName}${isAmd ? '-amd' : ''}.d.ts`;
+    const fullFileName = path.join(roosterJsDistPath, fileName);
 
     let dependencies = '';
 
-    if (dependsOnRoosterJs) {
-        const roosterjsDtsFileName = `rooster${isAmd ? '-amd' : ''}.d.ts`;
-        fs.copyFileSync(
-            path.join(roosterJsDistPath, roosterjsDtsFileName),
-            path.join(targetPath, roosterjsDtsFileName)
-        );
+    if (dependsOnLegacy) {
+        dependencies += `/// <reference path="./rooster-legacy${isAmd ? '-amd' : ''}" />\n`;
+    }
 
-        dependencies += `/// <reference path="./rooster${isAmd ? '-amd' : ''}" />\n`;
+    if (dependsOnMain) {
+        dependencies += `/// <reference path="./${buildConfig['main'].jsFileBaseName}${
+            isAmd ? '-amd' : ''
+        }" />\n`;
     }
 
     if (dependsOnReact) {
@@ -473,34 +475,34 @@ function dts(isAmd, target) {
 }
 
 module.exports = {
-    dtsCommonJs: {
-        message: `Generating type definition file (rooster.d.ts) for CommonJs...`,
-        callback: () => dts(false /*isAmd*/, 'packages'),
-        enabled: options => options.dts,
-    },
-    dtsAmd: {
-        message: `Generating type definition file (rooster-amd.d.ts) for AMD...`,
-        callback: () => dts(true /*isAmd*/, 'packages'),
-        enabled: options => options.dts,
-    },
     dtsCommonJsUi: {
         message: `Generating type definition file (rooster-react.d.ts) for CommonJs...`,
-        callback: () => dts(false /*isAmd*/, 'packages-ui'),
+        callback: () => dts(false /*isAmd*/, 'react'),
         enabled: options => options.dts,
     },
     dtsAmdUi: {
         message: `Generating type definition file (rooster-react-amd.d.ts) for AMD...`,
-        callback: () => dts(true /*isAmd*/, 'packages-ui'),
+        callback: () => dts(true /*isAmd*/, 'react'),
         enabled: options => options.dts,
     },
-    dtsCommonJsContentModel: {
-        message: `Generating type definition file (rooster-content-model.d.ts) for CommonJs...`,
-        callback: () => dts(false /*isAmd*/, 'packages-content-model'),
+    dtsCommonJsMain: {
+        message: `Generating type definition file (rooster.d.ts) for CommonJs...`,
+        callback: () => dts(false /*isAmd*/, 'main'),
         enabled: options => options.dts,
     },
-    dtsAmdContentModel: {
-        message: `Generating type definition file (rooster-content-model-amd.d.ts) for AMD...`,
-        callback: () => dts(true /*isAmd*/, 'packages-content-model'),
+    dtsAmdMain: {
+        message: `Generating type definition file (rooster-amd.d.ts) for AMD...`,
+        callback: () => dts(true /*isAmd*/, 'main'),
         enabled: options => options.dts,
     },
+    // dtsCommonJsAdapter: {
+    //     message: `Generating type definition file (rooster-adapter.d.ts) for CommonJs...`,
+    //     callback: () => dts(false /*isAmd*/, 'legacyAdapter'),
+    //     enabled: options => options.dts,
+    // },
+    // dtsAmdAdapter: {
+    //     message: `Generating type definition file (rooster-adapter-amd.d.ts) for AMD...`,
+    //     callback: () => dts(true /*isAmd*/, 'legacyAdapter'),
+    //     enabled: options => options.dts,
+    // },
 };
