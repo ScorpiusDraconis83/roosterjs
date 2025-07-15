@@ -57,6 +57,10 @@
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
 				<p>Welcome to RoosterJs API References!</p>
+				<a href="#upgrade-from-roosterjs-8" id="upgrade-from-roosterjs-8" style="color: inherit; text-decoration: none;">
+					<h2>Upgrade from RoosterJs 8.*</h2>
+				</a>
+				<p>Please see <a href="https://github.com/microsoft/roosterjs/wiki/RoosterJs-9">here</a>.</p>
 				<a href="#content" id="content" style="color: inherit; text-decoration: none;">
 					<h2>Content</h2>
 				</a>
@@ -67,24 +71,22 @@
 							<code>createEditor()</code> function in roosterjs to create an editor with default
 						configurations.</p>
 					</li>
-					<li><p><a href="modules/roosterjs_editor_core.html">roosterjs-editor-core</a>:
-							Defines the core editor and plugin infrastructure. Use <code>roosterjs-editor-core</code>
+					<li><p><a href="modules/roosterjs_content_model_core.html">roosterjs-content-model-core</a>:
+							Defines the core editor and plugin infrastructure. Use <code>roosterjs-content-model-core</code>
 						instead of <code>roosterjs</code> to build and customize your own editor.</p>
 					</li>
-					<li><p><a href="modules/roosterjs_editor_api.html">roosterjs-editor-api</a>:
+					<li><p><a href="modules/roosterjs_content_model_api.html">roosterjs-content-model-api</a>:
 							Defines APIs for editor operations. Use these APIs to modify content and
-						formatting in the editor you built using <code>roosterjs-editor-core</code>.</p>
+						formatting in the editor you built using <code>roosterjs-content-model-core</code>.</p>
 					</li>
-					<li><p><a href="modules/roosterjs_editor_dom.html">roosterjs-editor-dom</a>:
-							Defines APIs for DOM operations. Use <code>roosterjs-editor-api</code> instead unless
-						you want to access DOM API directly.</p>
+					<li><p><a href="modules/roosterjs_content_model_dom.html">roosterjs-content-model-dom</a>:
+						Defines APIs for Content Model and DOM operations. This package do conversion between DOM tree and roosterjs Content Model.</p>
 					</li>
-					<li><p><a href="modules/roosterjs_editor_plugins.html">roosterjs-editor-plugins</a>:
-							Defines basic plugins for common features. Examples: making hyperlinks,
-						pasting HTML content, inserting inline images.</p>
+					<li><p><a href="modules/roosterjs_content_model_plugins.html">roosterjs-content-model-plugins</a>:
+						Defines basic plugins for common features.</p>
 					</li>
-					<li><p><a href="modules/roosterjs_editor_types.html">roosterjs-editor-types</a>:
-						Defines public interfaces and enumerations.</p>
+					<li><p><a href="modules/roosterjs_content_model_types.html">roosterjs-content-model-types</a>:
+						Defines public interfaces and enumerations, including Content Model types, API parameters and other types.</p>
 					</li>
 				</ol>
 				<p>There are also some extension packages to provide additional functionalities.</p>
@@ -92,15 +94,16 @@
 					<li><p><a href="modules/roosterjs_color_utils.html">roosterjs-color-utils</a>:
 						Provide color transformation utility to make editor work under dark mode.</p>
 					</li>
-					<li><p><a href="modules/roosterjs_react.html">roosterjs-react</a>:
-						Provide a React wrapper of roosterjs so it can be easily used with React.</p>
-					</li>
-					<li><p><a href="modules/roosterjs_editor_types_compatible.html">roosterjs-editor-types-compatible</a>:
-							Provide types that are compatible with isolatedModules mode. When using isolatedModules mode,
-							&quot;const enum&quot; will not work correctly, this package provides enums with prefix &quot;Compatible&quot; in
-						their names and they have the same value with const enums in roosterjs-editor-types package</p>
+					<li><p><a href="https://microsoft.github.io/roosterjs/docs/modules/roosterjs_content_model_types.html">roosterjs-content-model-markdown</a>:
+						Defines public APIs to enable conversions between Markdown and ContentModel</p>
 					</li>
 				</ol>
+				<p>To be compatible with old (8.*) versions, you can use <code>EditorAdapter</code> class from the following package which can act as a 8.* Editor:</p>
+				<ol>
+					<li><a href="modules/roosterjs_editor_adapter.html">roosterjs-editor-adapter</a>:
+					Provide a adapter class <code>EditorAdapter</code> to work with Editor (9.*) and legacy plugins (via <a href="interfaces/roosterjs_editor_adapter.editoradapteroptions.html#legacyplugins">EditorAdapterOptions.legacyPlugins</a>)</li>
+				</ol>
+				<p>To view references document for legacy (v8.*) packages, please download the doc <a href="../legacyDemo/roosterjs_v8_doc.zip">here</a></p>
 				<a href="#see-also" id="see-also" style="color: inherit; text-decoration: none;">
 					<h2>See also</h2>
 				</a>
@@ -121,34 +124,25 @@
 						<a href="modules/roosterjs_color_utils.html">roosterjs-<wbr>color-<wbr>utils</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/roosterjs_content_model.html">roosterjs-<wbr>content-<wbr>model</a>
+						<a href="modules/roosterjs_content_model_api.html">roosterjs-<wbr>content-<wbr>model-<wbr>api</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/roosterjs_content_model_core.html">roosterjs-<wbr>content-<wbr>model-<wbr>core</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="modules/roosterjs_content_model_dom.html">roosterjs-<wbr>content-<wbr>model-<wbr>dom</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/roosterjs_content_model_editor.html">roosterjs-<wbr>content-<wbr>model-<wbr>editor</a>
+						<a href="modules/roosterjs_content_model_markdown.html">roosterjs-<wbr>content-<wbr>model-<wbr>markdown</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/roosterjs_content_model_plugins.html">roosterjs-<wbr>content-<wbr>model-<wbr>plugins</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="modules/roosterjs_content_model_types.html">roosterjs-<wbr>content-<wbr>model-<wbr>types</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/roosterjs_editor_api.html">roosterjs-<wbr>editor-<wbr>api</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/roosterjs_editor_core.html">roosterjs-<wbr>editor-<wbr>core</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/roosterjs_editor_dom.html">roosterjs-<wbr>editor-<wbr>dom</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/roosterjs_editor_plugins.html">roosterjs-<wbr>editor-<wbr>plugins</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/roosterjs_editor_types.html">roosterjs-<wbr>editor-<wbr>types</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/roosterjs_editor_types_compatible.html">roosterjs-<wbr>editor-<wbr>types-<wbr>compatible</a>
+						<a href="modules/roosterjs_editor_adapter.html">roosterjs-<wbr>editor-<wbr>adapter</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="modules/roosterjs_react.html">roosterjs-<wbr>react</a>
@@ -180,9 +174,6 @@
 			<ul class="tsd-legend">
 				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
 				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
 			</ul>
 		</div>
 	</div>
