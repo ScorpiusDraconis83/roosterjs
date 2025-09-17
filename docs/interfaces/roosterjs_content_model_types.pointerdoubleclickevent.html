@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ReadonlyContentModelCode | RoosterJs API Reference</title>
+	<title>PointerDoubleClickEvent | RoosterJs API Reference</title>
 	<meta name="description" content="Documentation for RoosterJs API Reference">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,10 +56,10 @@
 					<a href="../modules/roosterjs_content_model_types.html">roosterjs-content-model-types</a>
 				</li>
 				<li>
-					<a href="roosterjs_content_model_types.readonlycontentmodelcode.html">ReadonlyContentModelCode</a>
+					<a href="roosterjs_content_model_types.pointerdoubleclickevent.html">PointerDoubleClickEvent</a>
 				</li>
 			</ul>
-			<h1>Interface ReadonlyContentModelCode</h1>
+			<h1>Interface PointerDoubleClickEvent</h1>
 		</div>
 	</div>
 </header>
@@ -69,9 +69,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Represent code info of Content Model. (Readonly)
-							ContentModelCode is a decorator but not a standalone model type, instead it need to be put inside a ContentModelSegment
-						since code is also a kind of segment, with some extra information</p>
+						<p>This interface represents a PluginEvent wrapping native double-click event with pointer information</p>
 					</div>
 				</div>
 			</section>
@@ -79,13 +77,10 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="../modules/roosterjs_content_model_types.html#readonlymark" class="tsd-signature-type" data-tsd-kind="Type alias">ReadonlyMark</a>
-					</li>
-					<li>
-						<a href="roosterjs_content_model_types.readonlycontentmodelwithformat.html" class="tsd-signature-type" data-tsd-kind="Interface">ReadonlyContentModelWithFormat</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/roosterjs_content_model_types.html#contentmodelcodeformat" class="tsd-signature-type" data-tsd-kind="Type alias">ContentModelCodeFormat</a><span class="tsd-signature-symbol">&gt;</span>
+						<a href="roosterjs_content_model_types.baseplugindomevent.html" class="tsd-signature-type" data-tsd-kind="Interface">BasePluginDomEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">&quot;pointerDoubleClick&quot;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PointerEvent</span><span class="tsd-signature-symbol">&gt;</span>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">ReadonlyContentModelCode</span>
+								<span class="target">PointerDoubleClickEvent</span>
 							</li>
 						</ul>
 					</li>
@@ -98,9 +93,9 @@
 						<section class="tsd-index-section tsd-is-inherited">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="roosterjs_content_model_types.readonlycontentmodelcode.html#dummy1" class="tsd-kind-icon">dummy1</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="roosterjs_content_model_types.readonlycontentmodelcode.html#dummy2" class="tsd-kind-icon">dummy2</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="roosterjs_content_model_types.readonlycontentmodelcode.html#format" class="tsd-kind-icon">format</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="roosterjs_content_model_types.pointerdoubleclickevent.html#eventdatacache" class="tsd-kind-icon">event<wbr>Data<wbr>Cache</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="roosterjs_content_model_types.pointerdoubleclickevent.html#eventtype" class="tsd-kind-icon">event<wbr>Type</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="roosterjs_content_model_types.pointerdoubleclickevent.html#rawevent" class="tsd-kind-icon">raw<wbr>Event</a></li>
 							</ul>
 						</section>
 					</div>
@@ -109,53 +104,60 @@
 			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="dummy1" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> dummy1</h3>
-					<div class="tsd-signature tsd-kind-icon">dummy1<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">[]</span></div>
+					<a name="eventdatacache" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> event<wbr>Data<wbr>Cache</h3>
+					<div class="tsd-signature tsd-kind-icon">event<wbr>Data<wbr>Cache<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from ReadonlyMark.dummy1</p>
+						<p>Inherited from <a href="roosterjs_content_model_types.baseplugindomevent.html">BasePluginDomEvent</a>.<a href="roosterjs_content_model_types.baseplugindomevent.html#eventdatacache">eventDataCache</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/ScorpiusDraconis83/roosterjs/blob/08c0095/packages/roosterjs-content-model-types/lib/contentModel/common/MutableMark.ts#L66">roosterjs-content-model-types/lib/contentModel/common/MutableMark.ts:66</a></li>
+							<li>Defined in <a href="https://github.com/ScorpiusDraconis83/roosterjs/blob/08c0095/packages/roosterjs-content-model-types/lib/event/BasePluginEvent.ts#L17">roosterjs-content-model-types/lib/event/BasePluginEvent.ts:17</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The mutable marker to mark an object as mutable. When assign readonly object to a mutable type, compile will fail to build
-								due to this member does not exist from source type.
-							This is used for preventing assigning ReadonlyMark to ShallowMutableMark or MutableMark</p>
+							<p>An optional event cache.
+								This will be consumed by event cache API to store some expensive calculation result.
+							So that for the same event across plugins, the result doesn&#39;t need to be calculated again</p>
+						</div>
+					</div>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-index-signature">
+								<h5><span class="tsd-signature-symbol">[</span>key: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><span class="tsd-signature-type">any</span></h5>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="eventtype" class="tsd-anchor"></a>
+					<h3>event<wbr>Type</h3>
+					<div class="tsd-signature tsd-kind-icon">event<wbr>Type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;pointerDoubleClick&quot;</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="roosterjs_content_model_types.baseplugindomevent.html">BasePluginDomEvent</a>.<a href="roosterjs_content_model_types.baseplugindomevent.html#eventtype">eventType</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/ScorpiusDraconis83/roosterjs/blob/08c0095/packages/roosterjs-content-model-types/lib/event/BasePluginEvent.ts#L10">roosterjs-content-model-types/lib/event/BasePluginEvent.ts:10</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Type of this event</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="dummy2" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> dummy2</h3>
-					<div class="tsd-signature tsd-kind-icon">dummy2<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">[]</span></div>
+					<a name="rawevent" class="tsd-anchor"></a>
+					<h3>raw<wbr>Event</h3>
+					<div class="tsd-signature tsd-kind-icon">raw<wbr>Event<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PointerEvent</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from ReadonlyMark.dummy2</p>
+						<p>Inherited from <a href="roosterjs_content_model_types.baseplugindomevent.html">BasePluginDomEvent</a>.<a href="roosterjs_content_model_types.baseplugindomevent.html#rawevent">rawEvent</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/ScorpiusDraconis83/roosterjs/blob/08c0095/packages/roosterjs-content-model-types/lib/contentModel/common/MutableMark.ts#L72">roosterjs-content-model-types/lib/contentModel/common/MutableMark.ts:72</a></li>
+							<li>Defined in <a href="https://github.com/ScorpiusDraconis83/roosterjs/blob/08c0095/packages/roosterjs-content-model-types/lib/event/BasePluginEvent.ts#L30">roosterjs-content-model-types/lib/event/BasePluginEvent.ts:30</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The mutable marker to mark an object as mutable. When assign readonly object to a mutable type, compile will fail to build
-							due to this member does not exist from source type.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="format" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> format</h3>
-					<div class="tsd-signature tsd-kind-icon">format<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Readonly</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/roosterjs_content_model_types.html#contentmodelcodeformat" class="tsd-signature-type" data-tsd-kind="Type alias">ContentModelCodeFormat</a><span class="tsd-signature-symbol">&gt;</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="roosterjs_content_model_types.readonlycontentmodelwithformat.html">ReadonlyContentModelWithFormat</a>.<a href="roosterjs_content_model_types.readonlycontentmodelwithformat.html#format">format</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/ScorpiusDraconis83/roosterjs/blob/08c0095/packages/roosterjs-content-model-types/lib/contentModel/format/ContentModelWithFormat.ts#L20">roosterjs-content-model-types/lib/contentModel/format/ContentModelWithFormat.ts:20</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Format of this model</p>
+							<p>Raw DOM event</p>
 						</div>
 					</div>
 				</section>
@@ -204,16 +206,16 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-module">
-						<a href="roosterjs_content_model_types.readonlycontentmodelcode.html" class="tsd-kind-icon">Readonly<wbr>Content<wbr>Model<wbr>Code</a>
+						<a href="roosterjs_content_model_types.pointerdoubleclickevent.html" class="tsd-kind-icon">Pointer<wbr>Double<wbr>Click<wbr>Event</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="roosterjs_content_model_types.readonlycontentmodelcode.html#dummy1" class="tsd-kind-icon">dummy1</a>
+								<a href="roosterjs_content_model_types.pointerdoubleclickevent.html#eventdatacache" class="tsd-kind-icon">event<wbr>Data<wbr>Cache</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="roosterjs_content_model_types.readonlycontentmodelcode.html#dummy2" class="tsd-kind-icon">dummy2</a>
+								<a href="roosterjs_content_model_types.pointerdoubleclickevent.html#eventtype" class="tsd-kind-icon">event<wbr>Type</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="roosterjs_content_model_types.readonlycontentmodelcode.html#format" class="tsd-kind-icon">format</a>
+								<a href="roosterjs_content_model_types.pointerdoubleclickevent.html#rawevent" class="tsd-kind-icon">raw<wbr>Event</a>
 							</li>
 						</ul>
 					</li>
