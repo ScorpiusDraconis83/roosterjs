@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for roosterjs-content-model-api/lib/publicApi/block/setAlignment.ts</title>
+    <title>Code coverage report for roosterjs-content-model-plugins/lib/edit/utils/preserveParagraphFormat.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../../prettify.css" />
     <link rel="stylesheet" href="../../../../base.css" />
@@ -19,20 +19,20 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../../index.html">All files</a> / <a href="index.html">roosterjs-content-model-api/lib/publicApi/block</a> setAlignment.ts</h1>
+        <h1><a href="../../../../index.html">All files</a> / <a href="index.html">roosterjs-content-model-plugins/lib/edit/utils</a> preserveParagraphFormat.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>5/5</span>
+                <span class='fraction'>8/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>8/8</span>
             </div>
         
             
@@ -72,7 +72,19 @@
 <a name='L13'></a><a href='#L13'>13</a>
 <a name='L14'></a><a href='#L14'>14</a>
 <a name='L15'></a><a href='#L15'>15</a>
-<a name='L16'></a><a href='#L16'>16</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -81,26 +93,47 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">17x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">17x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { setModelAlignment } from '../../modelApi/block/setModelAlignment';
-import type { IEditor } from 'roosterjs-content-model-types';
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">71x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">20x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">20x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import type { ShallowMutableContentModelParagraph } from 'roosterjs-content-model-types';
 &nbsp;
 /**
- * Set text alignment of selected paragraphs
- * @param editor The editor to set alignment
- * @param alignment Alignment value: left, center or right
+ * @internal
+ * Preserve specific paragraph format properties from source paragraph to target paragraph
+ * @param formatsToPreserveOnMerge Array of format property names to preserve
+ * @param paragraph Source paragraph to copy format from
+ * @param newParagraph Target paragraph to copy format to
  */
-export function setAlignment(editor: IEditor, alignment: 'left' | 'center' | 'right' | 'justify') {
-    editor.focus();
+export function preserveParagraphFormat(
+    formatsToPreserveOnMerge: string[] | undefined,
+    paragraph: ShallowMutableContentModelParagraph,
+    newParagraph: ShallowMutableContentModelParagraph
+) {
+    if (formatsToPreserveOnMerge &amp;&amp; formatsToPreserveOnMerge.length) {
+        const format = paragraph.format as { [key: string]: string };
+        const newFormat = newParagraph.format as { [key: string]: string };
+        formatsToPreserveOnMerge.forEach(key =&gt; {
+            const formatValue = format[key];
 &nbsp;
-    editor.formatContentModel(model =&gt; setModelAlignment(model, alignment), {
-        apiName: 'setAlignment',
-    });
+            if (formatValue !== undefined) {
+                newFormat[key] = formatValue;
+            }
+        });
+    }
 }
 &nbsp;</pre></td></tr></table></pre>
 
