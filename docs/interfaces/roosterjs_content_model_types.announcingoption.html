@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>DOMCreator | RoosterJs API Reference</title>
+	<title>AnnouncingOption | RoosterJs API Reference</title>
 	<meta name="description" content="Documentation for RoosterJs API Reference">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,10 +56,10 @@
 					<a href="../modules/roosterjs_content_model_types.html">roosterjs-content-model-types</a>
 				</li>
 				<li>
-					<a href="roosterjs_content_model_types.domcreator.html">DOMCreator</a>
+					<a href="roosterjs_content_model_types.announcingoption.html">AnnouncingOption</a>
 				</li>
 			</ul>
-			<h1>Interface DOMCreator</h1>
+			<h1>Interface AnnouncingOption</h1>
 		</div>
 	</div>
 </header>
@@ -69,7 +69,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>A handler type to convert HTML string to a DOM object</p>
+						<p>Options for announcing format changes</p>
 					</div>
 				</div>
 			</section>
@@ -77,7 +77,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">DOMCreator</span>
+						<span class="target">AnnouncingOption</span>
 					</li>
 				</ul>
 			</section>
@@ -88,8 +88,7 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="roosterjs_content_model_types.domcreator.html#htmltodom" class="tsd-kind-icon">html<wbr>ToDOM</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="roosterjs_content_model_types.domcreator.html#isbypassed" class="tsd-kind-icon">is<wbr>Bypassed</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="roosterjs_content_model_types.announcingoption.html#announceformatchange" class="tsd-kind-icon">announce<wbr>Format<wbr>Change</a></li>
 							</ul>
 						</section>
 					</div>
@@ -98,54 +97,17 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="htmltodom" class="tsd-anchor"></a>
-					<h3>html<wbr>ToDOM</h3>
-					<div class="tsd-signature tsd-kind-icon">html<wbr>ToDOM<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>html<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Document</span></div>
+					<a name="announceformatchange" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> announce<wbr>Format<wbr>Change</h3>
+					<div class="tsd-signature tsd-kind-icon">announce<wbr>Format<wbr>Change<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ScorpiusDraconis83/roosterjs/blob/8f11c65/packages/roosterjs-content-model-types/lib/parameter/TrustedHTMLHandler.ts#L14">roosterjs-content-model-types/lib/parameter/TrustedHTMLHandler.ts:14</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-signature">
-								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-interface">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>html<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Document</span></li>
-								</ul>
-								<ul class="tsd-descriptions">
-									<li class="tsd-description">
-										<div class="tsd-comment tsd-typography">
-											<div class="lead">
-												<p>Callback to convert HTML string to a DOM object</p>
-											</div>
-										</div>
-										<h4 class="tsd-parameters-title">Parameters</h4>
-										<ul class="tsd-parameters">
-											<li>
-												<h5>html: <span class="tsd-signature-type">string</span></h5>
-											</li>
-										</ul>
-										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Document</span></h4>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="isbypassed" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> is<wbr>Bypassed</h3>
-					<div class="tsd-signature tsd-kind-icon">is<wbr>Bypassed<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/ScorpiusDraconis83/roosterjs/blob/8f11c65/packages/roosterjs-content-model-types/lib/parameter/TrustedHTMLHandler.ts#L20">roosterjs-content-model-types/lib/parameter/TrustedHTMLHandler.ts:20</a></li>
+							<li>Defined in <a href="https://github.com/ScorpiusDraconis83/roosterjs/blob/8f11c65/packages/roosterjs-content-model-types/lib/parameter/AnnouncingOption.ts#L8">roosterjs-content-model-types/lib/parameter/AnnouncingOption.ts:8</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Flag to indicate if this handler is bypassed or not.
-							If this is true, it means that when converting HTML string to DOM object, we don&#39;t need to do any conversion.</p>
+							<p>Whether to announce the format change</p>
 						</div>
 					</div>
 				</section>
@@ -194,13 +156,10 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-module">
-						<a href="roosterjs_content_model_types.domcreator.html" class="tsd-kind-icon">DOMCreator</a>
+						<a href="roosterjs_content_model_types.announcingoption.html" class="tsd-kind-icon">Announcing<wbr>Option</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="roosterjs_content_model_types.domcreator.html#htmltodom" class="tsd-kind-icon">html<wbr>ToDOM</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="roosterjs_content_model_types.domcreator.html#isbypassed" class="tsd-kind-icon">is<wbr>Bypassed</a>
+								<a href="roosterjs_content_model_types.announcingoption.html#announceformatchange" class="tsd-kind-icon">announce<wbr>Format<wbr>Change</a>
 							</li>
 						</ul>
 					</li>
